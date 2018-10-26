@@ -1,0 +1,17 @@
+{
+  "name": "testv",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "cover": "istanbul cover ./node_modules/mocha/bin/_mocha --reporter test/mocha.js"
+  },
+  "dependencies": {
+    "istanbul": "^0.4.5",
+    "mocha": "^5.2.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
+}
