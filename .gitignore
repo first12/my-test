@@ -2,3 +2,4 @@
 .DS_Store
 /node_modules
 /unit-test/node_modules
+/flow-test/node_modules
