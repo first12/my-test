@@ -1,6 +1,6 @@
 "use strict";
 var num = 100;
-num = '12';
+// num = '12';
 console.log(num);
 var Student = /** @class */ (function () {
     function Student(firstName, middleInitial, lastName) {

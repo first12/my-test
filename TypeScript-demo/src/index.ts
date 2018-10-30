@@ -1,6 +1,6 @@
 
 let num: number = 100;
-num = '12';
+// num = '12';
 console.log(num)
 
 class Student {
