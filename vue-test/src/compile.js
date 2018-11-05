@@ -11,17 +11,18 @@ class Compile {
       //把 el 中的所有子节点放到内存中。 fragment
       let fragment = this.node2fragment(this.el);
       // 在内存中编译 fragment， 把fragment一次性放入dom
-      console.log(fragment);
+      // console.log(fragment);
       this.compile(fragment)
-
+      this.el.appendChild(fragment)
+      console.log(fragment)
     }
   }
   // 在内存中编译文档碎片
   compile(fragment){
-    console.log(typeof fragment)
+    // console.log(typeof fragment)
     let childNodes = fragment.childNodes;
     childNodes.forEach((node) => {
-      console.log(node.nodeType)
+      // console.log(node.nodeType)
       if (this.isElementNode(node)) {
         // 元素节点
         this.compileElement(node);
@@ -36,16 +37,45 @@ class Compile {
     })
   }
   //解析元素节点
-  compileElement(){}
+  compileElement(node){
+    let attributes = node.attributes;
+    this.toArray(attributes).forEach(attr => {
+      let attrName = attr.name;
+      let attrVal = attr.value;
+      if (this.isDirective(attrName)) {
+        // console.log(attrName)
+        let type = attrName.slice(2)
+        console.log(type)
+        // if (type == 'text') {
+        //   node.textContent = this.vm.$data[attrVal];
+        // }
+        // if (type === 'html') {
+        //   node.innerHTML = this.vm.$data[attrVal];
+        // }
+        // // model
+        // if (type === 'model') {
+        //   node.value = this.vm.$data[attrVal];
+        // }
+        if (this.isEventDirective(type)) {
+          console.log('12122')
+          // let event = type.split(':')[1];
+          // node.addEventListener(event, this.vm.$methods[attrVal].bind(this.vm))
+          compileUtil['eventHandle'](node, this.vm, type, attrVal)
+        } else {
+          compileUtil[type] && compileUtil[type](node, this.vm, attrVal)
+        }
+      }
+    })
+  }
   // 解析文本节点
   compileText(){}
   // dom转fragment
   node2fragment(node){
     let fragement = document.createDocumentFragment();
     let childNode = node.childNodes;
-    console.log(childNode)
+    // console.log(childNode)
     this.toArray(childNode).forEach(node => {
-      console.log(node)
+      // console.log(node)
       fragement.appendChild(node);
     })
     return fragement;
@@ -63,5 +93,32 @@ class Compile {
   isTextNode(node) {
     // nodeType ： 节点类型： 1：元素节点，  3： 文本节点
     return node.nodeType === 3;
+  }
+  isDirective(attr) {
+    return attr.startsWith('v-');
+  }
+  isEventDirective(attr) {
+    return attr.split(':')[0] === 'on';
+  }
+
+
+}
+let compileUtil = {
+  text(node, vm, attrVal) {
+    node.textContent = vm.$data[attrVal];
+  },
+  html(node, vm, attrVal) {
+    node.innerHTML = vm.$data[attrVal];
+  },
+  model(node, vm, attrVal) {
+    node.value = vm.$data[attrVal];
+  },
+  eventHandle(node, vm, type, attrVal){
+    let event = type.split(':')[1];
+    let fn = vm.$methods && vm.$methods[attrVal];
+    if (event && fn) {
+      node.addEventListener(event, fn.bind(vm))
+    }
+
   }
 }

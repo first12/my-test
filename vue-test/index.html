@@ -8,16 +8,38 @@
 <div id="app">
     <p>{{msg}}</p>
     <p v-text="msg"></p>
+    <p v-html="htm"></p>
+    <input type="text" v-model="msg">
+    <button v-on:click="cFn">hah</button>
+    <select name="" id="fd">
+        <option value="11">ss</option>
+        <option value="22">ss</option>
+    </select>
 </div>
 <script src="./src/compile.js"></script>
 <script src="./src/vue.js"></script>
+<!--<script src="https://m2.lefile.cn/global/js/jquery-1.8.3.min.js"></script>-->
 <script>
     const vm = new Vue({
       el: '#app',
       data: {
-        msg: 'hheelloo'
-      }
+        msg: 'hheelloo',
+        htm: '<h1>asdf</h1>'
+      },
+      // methods: {
+      //   cFn(){
+      //     // alert(12)
+      //     console.log(this)
+      //   }
+      // }
     })
 </script>
+<!--<script>-->
+    <!--$(document).ready(function(){-->
+      <!--$('.city').on('change',function(){-->
+       <!--alert($(this).val())-->
+      <!--})-->
+    <!--})-->
+<!--</script>-->
 </body>
 </html>
