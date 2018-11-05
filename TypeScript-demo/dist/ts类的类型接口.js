@@ -7,3 +7,4 @@ var XiaoMing = /** @class */ (function () {
     XiaoMing.prototype.eat = function () { };
     return XiaoMing;
 }());
+//数据访问层代码
