@@ -14,7 +14,7 @@ class Compile {
       // console.log(fragment);
       this.compile(fragment)
       this.el.appendChild(fragment)
-      console.log(fragment)
+      // console.log(fragment)
     }
   }
   // 在内存中编译文档碎片
@@ -45,7 +45,7 @@ class Compile {
       if (this.isDirective(attrName)) {
         // console.log(attrName)
         let type = attrName.slice(2)
-        console.log(type)
+        // console.log(type)
         // if (type == 'text') {
         //   node.textContent = this.vm.$data[attrVal];
         // }
@@ -68,7 +68,16 @@ class Compile {
     })
   }
   // 解析文本节点
-  compileText(){}
+  compileText(node){
+   
+    let txt = node.textContent;
+    let reg = /\{\{(.+)\}\}/;
+    if (reg.test(txt)) {
+      let expstr = RegExp.$1;
+      let content = this.vm.$data[expstr];
+      node.textContent = txt.replace(reg, content);
+    }
+  }
   // dom转fragment
   node2fragment(node){
     let fragement = document.createDocumentFragment();
@@ -119,6 +128,5 @@ let compileUtil = {
     if (event && fn) {
       node.addEventListener(event, fn.bind(vm))
     }
-
   }
 }
