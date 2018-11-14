@@ -6,6 +6,7 @@
 </head>
 <body>
 <div id="app">
+    <p>{{car.color}}</p>
     <p>dsalf;afafas{{msg}}</p>
     <p>d我阿斯蒂芬{{msg12}}</p>
     <p v-text="msg"></p>
@@ -25,6 +26,10 @@
       el: '#app',
       data: {
         msg: 'hheelloo',
+        car: {
+            color: 'red',
+            size: 'big'
+        },
         msg12: 'msg12121212str',
         htm: '<h1>asdf</h1>'
       },
